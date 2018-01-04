@@ -1,4 +1,4 @@
-package com.desire3d.event;
+package com.desire3d.notification.event;
 
 import java.io.Serializable;
 
