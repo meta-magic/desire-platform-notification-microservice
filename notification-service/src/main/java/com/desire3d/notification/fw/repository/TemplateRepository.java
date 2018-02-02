@@ -14,11 +14,12 @@ public interface TemplateRepository {
 
 	public Template save(Template template) throws PersistenceFailureException;
 
+	public void update(Template template) throws PersistenceFailureException;
+
+	public void delete(String id) throws PersistenceFailureException;
+
 	public Collection<Template> findAll() throws DataRetrievalFailureException;
 
 	public Template findById(String id) throws DataRetrievalFailureException;
 
-	public void update(Template template) throws PersistenceFailureException;
-
-	public void delete(String id) throws PersistenceFailureException;
 }

@@ -45,35 +45,7 @@ public class TemplateRepositoryImpl implements TemplateRepository {
 		}
 		return template;
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<Template> findAll() throws DataRetrievalFailureException {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		try {
-			Query query = pm.newQuery(Template.class);
-			Collection<Template> queryResult = (Collection<Template>) query.execute();
-			return pm.detachCopyAll(queryResult);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DataRetrievalFailureException(ExceptionID.ERROR_RETRIEVE, e);
-		} finally {
-			pm.close();
-		}
-	}
-
-	@Override
-	public Template findById(String id) throws DataRetrievalFailureException {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		try {
-			return pm.detachCopy(pm.getObjectById(Template.class, id));
-		} catch (Exception e) {
-			throw new DataRetrievalFailureException(ExceptionID.ERROR_RETRIEVE, e);
-		} finally {
-			pm.close();
-		}
-	}
-
+	
 	@Override
 	public void update(Template template) throws PersistenceFailureException {
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -107,6 +79,34 @@ public class TemplateRepositoryImpl implements TemplateRepository {
 				tx.rollback();
 			}
 			throw new PersistenceFailureException(ExceptionID.ERROR_DELETE, e);
+		} finally {
+			pm.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<Template> findAll() throws DataRetrievalFailureException {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try {
+			Query query = pm.newQuery(Template.class);
+			Collection<Template> queryResult = (Collection<Template>) query.execute();
+			return pm.detachCopyAll(queryResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DataRetrievalFailureException(ExceptionID.ERROR_RETRIEVE, e);
+		} finally {
+			pm.close();
+		}
+	}
+
+	@Override
+	public Template findById(String id) throws DataRetrievalFailureException {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		try {
+			return pm.detachCopy(pm.getObjectById(Template.class, id));
+		} catch (Exception e) {
+			throw new DataRetrievalFailureException(ExceptionID.ERROR_RETRIEVE, e);
 		} finally {
 			pm.close();
 		}
