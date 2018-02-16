@@ -6,6 +6,7 @@ import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.Unique;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -23,6 +24,11 @@ public class Template implements Serializable {
 	@Persistent(customValueStrategy = "uuid")
 	@PrimaryKey
 	private String templateId;
+
+	@Unique
+	private String templateName;
+
+	private String subject;
 
 	private String content;
 
@@ -43,6 +49,22 @@ public class Template implements Serializable {
 		this.templateId = templateId;
 	}
 
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -59,20 +81,19 @@ public class Template implements Serializable {
 		this.isActive = isActive;
 	}
 
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	public AuditDetails getAuditDetails() {
 		return auditDetails;
 	}
 
 	public void setAuditDetails(AuditDetails auditDetails) {
 		this.auditDetails = auditDetails;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	@Override
-	public String toString() {
-		return "Template [templateId=" + templateId + ", content=" + content + ", isActive=" + isActive + ", auditDetails=" + auditDetails + "]";
 	}
 }

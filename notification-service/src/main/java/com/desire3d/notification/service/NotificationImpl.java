@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 import com.desire3d.notification.component.VelocityTemplateEngine;
 import com.desire3d.notification.event.EmailNotificationEvent;
-import com.desire3d.notification.exception.DataRetrievalFailureException;
 import com.desire3d.notification.fw.repository.TemplateRepository;
 import com.desire3d.notification.fw.service.Notification;
+import com.desire3d.notification.model.Template;
 import com.desire3d.notification.utils.MailSender;
 
 /**
@@ -37,23 +37,18 @@ public final class NotificationImpl extends VelocityTemplateEngine implements No
 	@Override
 	public final boolean sendEmail(final EmailNotificationEvent event) {
 		try {
-			String body = prepareEmailContent(event);
-			return MailSender.sendEmail(event.getToAddress(), event.getSubject(), body, event.getCc(), event.getBcc());
+			Template template = templateRepository.findById(event.getTemplateId());
+			String subject = template.getSubject();
+			if (event.getSubject() != null && !event.getSubject().isEmpty()) {
+				subject = event.getSubject();
+			}
+
+			String content = template.getContent();
+			String body = mergeTemplate(content, event.getDynamicContent());
+			return MailSender.sendEmail(event.getToAddress(), subject, body, event.getCc(), event.getBcc());
 		} catch (Throwable e) {
 			logger.error("Email sending failed : ", e);
 			return false;
 		}
-	}
-
-	/** 
-	 * method to find & prepare email body content using velocity template engine 
-	 * 
-	 * @param event
-	 * @return {@link String} dynamic email content using velocity template
-	 * @throws DataRetrievalFailureException 
-	 * */
-	private String prepareEmailContent(EmailNotificationEvent event) throws DataRetrievalFailureException {
-		String content = templateRepository.findById(event.getTemplateId()).getContent();
-		return mergeTemplate(content, event.getDynamicContent());
 	}
 }
