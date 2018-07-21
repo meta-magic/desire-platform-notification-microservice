@@ -8,11 +8,17 @@ FILE_PATH=$(pwd)
 POSTGRES=/usr/lib/postgresql/9.6/bin
 DBNAME=notificationdb
 DBUSER=postgres
+DBVERION=v1.1
 
-echo "Database inremental process started"
+#sh ./drop.sh
+#sh ./create.sh
+#sh ./load.sh
 
-sh ./drop.sh
-sh ./create.sh
-sh ./load.sh
 
-echo "Database inremental process completed successfully"
+
+echo incremental script started.
+
+$POSTGRES/psql -d $DBNAME -U $DBUSER -f $FILE_PATH/incremental/$DBVERION/TEMPLATE.sql
+$POSTGRES/psql -d $DBNAME -U $DBUSER -c "\COPY \"TEMPLATE\" from '$FILE_PATH/incremental/$DBVERION/UPDATETEMPLATE.csv' with delimiter '#' CSV HEADER"
+
+echo incremental script end.
