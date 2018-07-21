@@ -11,10 +11,8 @@ DBUSER=postgres
 
 echo "Database inremental process started"
 
-#sh ./drop.sh
-#sh ./create.sh
-#sh ./load.sh
-
-$POSTGRES/psql -d $DBNAME -U $DBUSER -f $FILE_PATH/incremental/TEMPLATE.sql
+sh ./drop.sh
+sh ./create.sh
+sh ./load.sh
 
 echo "Database inremental process completed successfully"
