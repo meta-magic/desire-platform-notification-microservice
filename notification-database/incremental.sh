@@ -16,6 +16,7 @@ DBVERION=v1.4
 
 echo incremental script started.
 
+$POSTGRES/psql -d $DBNAME -U $DBUSER -f $FILE_PATH/incremental/$DBVERION/TEMPLATE.sql
 $POSTGRES/psql -d $DBNAME -U $DBUSER -c "\COPY \"TEMPLATE\" from '$FILE_PATH/incremental/$DBVERION/UPDATETEMPLATE.csv' with delimiter '#' CSV HEADER"
 
 echo incremental script end.
