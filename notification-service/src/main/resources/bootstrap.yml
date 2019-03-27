@@ -11,7 +11,7 @@ spring:
       kafka:
         binder:
           headers: tokenId
-          zkNodes: 192.168.2.10
-          defaultZkPort: 2182
-          brokers: 192.168.2.10
-          defaultBrokerPort: 9093
+          zkNodes: zkskafka
+          defaultZkPort: 6501
+          brokers: brkafka
+          defaultBrokerPort: 6101
