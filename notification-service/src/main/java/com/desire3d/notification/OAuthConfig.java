@@ -11,31 +11,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OAuthConfig {
 
-	protected static String TOKEN_URL;
+	protected static String TOKEN_URL = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_TOKENURL");
 
-	protected static String CLIENT_ID;
+	protected static String CLIENT_ID = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTID");
 
-	protected static String CLIENT_SECRET;
+	protected static String CLIENT_SECRET = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTSECRET");
 
-	protected static String REFRESH_TOKEN;
+	protected static String REFRESH_TOKEN = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_REFRESHTOKEN");
 
 	protected static Long TOKEN_EXPIRES_AT = System.currentTimeMillis();
 
 	protected static String ACCESS_TOKEN = null;
 
-	public void setTokenUrl(String tokenUrl) {
-		OAuthConfig.TOKEN_URL = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_TOKENURL");
-	}
-
-	public void setClientId(String clientId) {
-		OAuthConfig.CLIENT_ID = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTID");
-	}
-
-	public void setClientSecret(String clientSecret) {
-		OAuthConfig.CLIENT_SECRET = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTSECRET");
-	}
-
-	public void setRefreshToken(String refreshToken) {
-		OAuthConfig.REFRESH_TOKEN = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_REFRESHTOKEN");
-	}
 }
