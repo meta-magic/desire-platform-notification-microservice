@@ -8,7 +8,7 @@ FILE_PATH=$(pwd)
 POSTGRES=/usr/lib/postgresql/9.6/bin
 DBNAME=notificationdb
 DBUSER=postgres
-DBVERION=v1.5
+DBVERION=v1.7
 
 #sh ./drop.sh
 #sh ./create.sh
