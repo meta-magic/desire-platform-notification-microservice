@@ -1,6 +1,5 @@
 package com.desire3d.notification;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -24,23 +23,19 @@ public class OAuthConfig {
 
 	protected static String ACCESS_TOKEN = null;
 
-	@Value("${oauth2.authentication.properties.tokenUrl}")
 	public void setTokenUrl(String tokenUrl) {
-		OAuthConfig.TOKEN_URL = tokenUrl;
+		OAuthConfig.TOKEN_URL = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_TOKENURL");
 	}
 
-	@Value("${oauth2.authentication.properties.clientId}")
 	public void setClientId(String clientId) {
-		OAuthConfig.CLIENT_ID = clientId;
+		OAuthConfig.CLIENT_ID = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTID");
 	}
 
-	@Value("${oauth2.authentication.properties.clientSecret}")
 	public void setClientSecret(String clientSecret) {
-		OAuthConfig.CLIENT_SECRET = clientSecret;
+		OAuthConfig.CLIENT_SECRET = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTSECRET");
 	}
 
-	@Value("${oauth2.authentication.properties.refreshToken}")
 	public void setRefreshToken(String refreshToken) {
-		OAuthConfig.REFRESH_TOKEN = refreshToken;
+		OAuthConfig.REFRESH_TOKEN = System.getenv("OAUTH2_AUTHENTICATION_PROPERTIES_REFRESHTOKEN");
 	}
 }

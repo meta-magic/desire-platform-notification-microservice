@@ -1,8 +1,17 @@
 spring:
-  profiles:
-    active: dev_env
   application:
     name: notificationservice
   cloud:
-    config:
-      uri: http://localhost:8081
+    stream:
+      bindings:
+        emailNotificationInputChannel:
+          destination: emailnotification
+          contentType: application/x-java-object
+          group: notification_emailnotification_cg
+      kafka:
+        binder:
+          headers: tokenId
+          zkNodes: 192.168.2.10
+          defaultZkPort: 2182
+          brokers: 192.168.2.10
+          defaultBrokerPort: 9093

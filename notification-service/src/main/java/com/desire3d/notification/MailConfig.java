@@ -1,6 +1,5 @@
 package com.desire3d.notification;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -26,28 +25,23 @@ public class MailConfig {
 
 	public static final Integer PORT = 587;
 
-	@Value("${mail.smtp.host}")
 	public void setHost(String host) {
-		MailConfig.HOST = host;
+		MailConfig.HOST = System.getenv("MAIL_SMTP_HOST");
 	}
 
-	@Value("${mail.smtp.username}")
 	public void setUsername(String username) {
-		MailConfig.USER_NAME = username;
+		MailConfig.USER_NAME = System.getenv("MAIL_SMTP_USERNAME");
 	}
 
-	@Value("${mail.debug}")
 	public void setDebug(boolean debug) {
-		MailConfig.DEBUG = debug;
+		MailConfig.DEBUG = Boolean.valueOf(System.getenv("MAIL_DEBUG"));
 	}
 
-	@Value("${mail.connectiontimeout}")
 	public void setConnectiontimeout(Integer connectiontimeout) {
-		MailConfig.CONNECTION_TIMEOUT = connectiontimeout;
+		MailConfig.CONNECTION_TIMEOUT = Integer.valueOf(System.getenv("MAIL_CONNECTIONTIMEOUT"));
 	}
 
-	@Value("${mail.timeout}")
 	public void setTimeout(Integer timeout) {
-		MailConfig.SOCKET_TIMEOUT = timeout;
+		MailConfig.SOCKET_TIMEOUT = Integer.valueOf(System.getenv("MAIL_TIMEOUT"));
 	}
 }
