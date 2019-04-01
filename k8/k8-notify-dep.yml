@@ -1,0 +1,109 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: notify-deploy
+  namespace: desire3d
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: notify
+      zone: prod
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        name: notify
+        version: "1.0.0"
+        release: stable
+        tier: fe
+        zone: prod
+        managed-by: m2
+    spec:
+      containers:
+        - name: notify-ctr
+          image: metamagicglobal/notify-k8
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9999
+          env:
+          - name: TOKEN_KEY
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key:  key
+          - name: TOKEN_VALIDITY
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: validity   
+          - name: SESSION_EXPIRY
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: expiry      
+          - name: MAIL_SMTP_HOST
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key:  host
+          - name: MAIL_SMTP_USERNAME
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: username   
+          - name: MAIL_DEBUG
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: debug      
+          - name: MAIL_CONNECTIONTIMEOUT
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: connectiontimeout
+          - name: MAIL_TIMEOUT
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: timeout                  
+          - name: OAUTH2_AUTHENTICATION_PROPERTIES_TOKENURL
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: tokenUrl
+          - name: OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTID
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: clientId      
+          - name: OAUTH2_AUTHENTICATION_PROPERTIES_CLIENTSECRET
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: clientSecret
+          - name: OAUTH2_AUTHENTICATION_PROPERTIES_REFRESHTOKEN
+            valueFrom:
+              secretKeyRef: 
+                name: notifysecret
+                key: refreshToken                
+          - name: NOTIFICATION_DB_CONNECTION_URL
+            valueFrom:
+              secretKeyRef: 
+                name: notifypostgres
+                key: connectionURL
+          - name: NOTIFICATION_MS_DB_USER
+            valueFrom:
+              secretKeyRef: 
+                name: notifypostgres
+                key: username
+          - name: NOTIFICATION_MS_DB_PASSWORD
+            valueFrom:
+              secretKeyRef: 
+                name: notifypostgres
+                key: password                             
